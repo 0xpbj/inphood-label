@@ -39,7 +39,8 @@ export default class App extends React.Component {
       ReactGA.event({
         category: 'inPhood Nutrition Label',
         action: 'Label Opened',
-        label: this.props.params.labelId
+        label: this.props.params.labelId,
+        nonInteraction: false
       })
       let ingredientData = JSON.parse(this.state.data.composite)
       let ingredient = new IngredientModel()
