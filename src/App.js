@@ -26,20 +26,21 @@ export default class App extends React.Component {
     .then(function(dataSnapshot) {
       this.setState({data: dataSnapshot.val()})
     }.bind(this));
-    ReactGA.initialize('UA-88850545-2', {
-      debug: !Config.DEBUG,
-      titleCase: false,
-      gaOptions: {
-        userId: this.props.params.userId,
-      }
-    })
   }
   render() {
     if (Object.prototype.hasOwnProperty.call(this.state.data, 'composite')) {
+      ReactGA.initialize('UA-88850545-2', {
+        debug: !Config.DEBUG,
+        titleCase: false,
+        gaOptions: {
+          userId: this.props.params.userId,
+          labelId: this.props.params.labelId
+        }
+      })
       ReactGA.event({
         category: 'inPhood Nutrition Label',
         action: 'Label Opened',
-        label: this.props.params.labelId,
+        label: 'Valid label found',
         nonInteraction: false
       })
       let ingredientData = JSON.parse(this.state.data.composite)
@@ -67,6 +68,22 @@ export default class App extends React.Component {
         </Grid>
       )
     }
-    return <NoMatch />
+    else {
+      ReactGA.initialize('UA-88850545-2', {
+        debug: !Config.DEBUG,
+        titleCase: false,
+        gaOptions: {
+          userId: 'badUserId',
+          labelId: 'badLabelId'
+        }
+      })
+      ReactGA.event({
+        category: 'inPhood Nutrition Label',
+        action: 'Error Label',
+        label: 'Bad url for label',
+        nonInteraction: false
+      })
+      return <NoMatch />
+    }
   }
 }
