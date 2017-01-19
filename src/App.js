@@ -11,14 +11,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import instagram from './instagram.svg'
 import './App.css'
 import NoMatch from './NoMatch'
-
-ReactGA.initialize('UA-88850545-1', {
-  debug: true,
-  titleCase: false,
-  gaOptions: {
-    userId: 'labelUser'
-  }
-})
+const Config = require('Config')
 
 export default class App extends React.Component {
   constructor() {
@@ -33,9 +26,21 @@ export default class App extends React.Component {
     .then(function(dataSnapshot) {
       this.setState({data: dataSnapshot.val()})
     }.bind(this));
+    ReactGA.initialize('UA-88850545-2', {
+      debug: !Config.DEBUG,
+      titleCase: false,
+      gaOptions: {
+        userId: this.props.params.userId,
+      }
+    })
   }
   render() {
     if (Object.prototype.hasOwnProperty.call(this.state.data, 'composite')) {
+      ReactGA.event({
+        category: 'inPhood Nutrition Label',
+        action: 'Label Opened',
+        label: this.props.params.labelId
+      })
       let ingredientData = JSON.parse(this.state.data.composite)
       let ingredient = new IngredientModel()
       ingredient.initializeFromSerialization(ingredientData)
