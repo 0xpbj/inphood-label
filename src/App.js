@@ -30,7 +30,7 @@ export default class App extends React.Component {
   render() {
     if (Object.prototype.hasOwnProperty.call(this.state.data, 'composite')) {
       ReactGA.initialize('UA-88850545-2', {
-        debug: !Config.DEBUG,
+        debug: Config.DEBUG,
         titleCase: false,
         gaOptions: {
           userId: this.props.params.userId,
@@ -70,7 +70,7 @@ export default class App extends React.Component {
     }
     else {
       ReactGA.initialize('UA-88850545-2', {
-        debug: !Config.DEBUG,
+        debug: Config.DEBUG,
         titleCase: false,
         gaOptions: {
           userId: 'badUserId',
