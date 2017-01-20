@@ -1,11 +1,13 @@
 var React = require('react')
 import ReactGA from 'react-ga'
-import firebase from 'firebase'
+// import firebase from 'firebase'
+var firebase = require('firebase')
 import Label from './NutritionEstimate'
 import {IngredientModel} from './IngredientModel'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 import Grid from 'react-bootstrap/lib/Grid'
+import Alert from 'react-bootstrap/lib/Alert'
 import Image from 'react-bootstrap/lib/Image'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import instagram from './instagram.svg'
@@ -17,14 +19,20 @@ export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      data: {}
+      data: {},
+      error: false
     }
   }
   componentWillMount() {
     const path = '/global/nutritionLabel/' + this.props.params.userId + '/' + this.props.params.labelId
     firebase.database().ref(path).once('value')
     .then(function(dataSnapshot) {
-      this.setState({data: dataSnapshot.val()})
+      if (dataSnapshot.exists() === false) {
+        this.setState({error: true})
+      }
+      else {
+        this.setState({data: dataSnapshot.val()})
+      }
     }.bind(this));
   }
   render() {
@@ -68,7 +76,7 @@ export default class App extends React.Component {
         </Grid>
       )
     }
-    else {
+    else if (this.state.error) {
       ReactGA.initialize('UA-88850545-2', {
         debug: Config.DEBUG,
         titleCase: false,
@@ -84,6 +92,13 @@ export default class App extends React.Component {
         nonInteraction: false
       })
       return <NoMatch />
+    }
+    else {
+      return (
+        <Alert bsStyle="info">
+          <h4>Label loading...</h4>
+        </Alert>
+      )
     }
   }
 }

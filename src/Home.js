@@ -1,6 +1,5 @@
 var React = require('react')
 import Alert from 'react-bootstrap/lib/Alert'
-import Button from 'react-bootstrap/lib/Button'
 
 export default class Home extends React.Component {
   render() {
