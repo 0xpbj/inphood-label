@@ -9,20 +9,20 @@ import Router from 'react-router/lib/Router'
 import IndexRoute from 'react-router/lib/IndexRoute'
 import browserHistory from 'react-router/lib/browserHistory'
 
-// import firebase from 'firebase'
-var firebase = require('firebase')
-// require("firebase/database")
 const Config = require('Config')
+const firebase = require('firebase')
 const fbConfig = {
   apiKey: Config.FIREBASE_API_KEY,
   databaseURL: Config.FIREBASE_DATABASE_URL,
 }
-firebase.initializeApp(fbConfig)
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(fbConfig)
+}
+
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={Layout}>
-      <IndexRoute component={Home}></IndexRoute>
-      <Route path="/:userId/:labelId" name="label" component={App}></Route>
+      <IndexRoute component={App}></IndexRoute>
       <Route path="*" component={NoMatch}/>
     </Route>
   </Router>,

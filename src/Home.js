@@ -5,9 +5,9 @@ export default class Home extends React.Component {
   render() {
     return (
       <Alert bsStyle="warning">
-        <h4>Missing information for userid and labelid</h4>
+        <h4>Missing information for user and label</h4>
         <p>
-          Example Label: <i>https://www.label.inphood.com/userid/labelid</i>
+          Example Label URL: <i>https://www.label.inphood.com/?userd=user&label=label</i>
         </p>
       </Alert>
     )

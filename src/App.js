@@ -13,6 +13,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import instagram from './instagram.svg'
 import './App.css'
 import NoMatch from './NoMatch'
+
 const Config = require('Config')
 
 export default class App extends React.Component {
@@ -24,7 +25,8 @@ export default class App extends React.Component {
     }
   }
   componentWillMount() {
-    const path = '/global/nutritionLabel/' + this.props.params.userId + '/' + this.props.params.labelId
+    const {user, label} = this.props.location.query
+    const path = '/global/nutritionLabel/' + user + '/' + label
     firebase.database().ref(path).once('value')
     .then(function(dataSnapshot) {
       if (dataSnapshot.exists() === false) {
@@ -37,12 +39,13 @@ export default class App extends React.Component {
   }
   render() {
     if (Object.prototype.hasOwnProperty.call(this.state.data, 'composite')) {
+      const {user, label} = this.props.location.query
       ReactGA.initialize('UA-88850545-2', {
         debug: Config.DEBUG,
         titleCase: false,
         gaOptions: {
-          userId: this.props.params.userId,
-          labelId: this.props.params.labelId
+          user: user,
+          label: label
         }
       })
       ReactGA.event({
@@ -54,11 +57,11 @@ export default class App extends React.Component {
       let ingredientData = JSON.parse(this.state.data.composite)
       let ingredient = new IngredientModel()
       ingredient.initializeFromSerialization(ingredientData)
-      const user = (this.props.params.userId !== 'anonymous') ? "http://www.instagram.com/" + this.props.params.userId : ''
-      const link = (this.props.params.userId !== 'anonymous')
-      ? <a href={user}>
+      const userLink = (user !== 'anonymous') ? "http://www.instagram.com/" + user : ''
+      const link = (user !== 'anonymous')
+      ? <a href={userLink}>
         <img src={instagram} className="App-logo" alt="logo" />
-        <text className="App-intro">@{this.props.params.userId}</text>
+        <text className="App-intro">@{user}</text>
         </a>
       : null
       return (
@@ -81,8 +84,8 @@ export default class App extends React.Component {
         debug: Config.DEBUG,
         titleCase: false,
         gaOptions: {
-          userId: 'badUserId',
-          labelId: 'badLabelId'
+          user: 'badUser',
+          label: 'badLabel'
         }
       })
       ReactGA.event({
