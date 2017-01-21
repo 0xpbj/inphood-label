@@ -7,7 +7,7 @@ export default class Home extends React.Component {
       <Alert bsStyle="warning">
         <h4>Missing information for user and label</h4>
         <p>
-          Example Label URL: <i>https://www.label.inphood.com/?userd=user&label=label</i>
+          Example Label URL: <i>http://www.label.inphood.com/?user=user&label=label</i>
         </p>
       </Alert>
     )
