@@ -19,8 +19,22 @@ if (firebase.apps.length === 0) {
   firebase.initializeApp(fbConfig)
 }
 
+import ReactGA from 'react-ga'
+ReactGA.initialize('UA-88850545-3', {
+  debug: Config.DEBUG,
+  titleCase: false,
+  gaOptions: {
+    userId: 'labelUser'
+  }
+})
+
+function fireTracking() {
+  ReactGA.set({ page: window.location.pathname })
+  ReactGA.pageview(window.location.pathname)
+}
+
 ReactDOM.render(
-  <Router history={browserHistory}>
+  <Router onUpdate={() => fireTracking()} history={browserHistory}>
     <Route path="/" component={Layout}>
       <IndexRoute component={App}></IndexRoute>
       <Route path="*" component={NoMatch}/>
