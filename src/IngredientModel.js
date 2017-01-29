@@ -35,6 +35,7 @@ export class IngredientModel {
     this._scaleGettersTo = 1.0
 
     this._suggestedServingAmount = 0
+    this._suggestedServingUnit = 'g'
 
     //
     //   Generic measures/Unit:
@@ -154,11 +155,11 @@ export class IngredientModel {
     this._measureString = dataForKey['Measure']
     this.setMeasurePropsFromString(this._measureString)
 
-    this.setServingAmount(100)
+    this.setServingAmount(100, 'g')
   }
 
   initializeComposite(scaledIngredients) {
-    console.log('initializeComposite ------------------------------------------')
+    console.log('initializeComposite ------------------------------------------');
     for (var key in scaledIngredients) {
       var scaledIngredient = scaledIngredients[key]
       const scaleFactor = scaledIngredient.getScale()
@@ -207,11 +208,11 @@ export class IngredientModel {
       //   Protein measures/metrics:
       this._totalProteinPerServing += ingredient._totalProteinPerServing * scaleFactor
 
-      // console.log('   ' + key)
-      // console.log('   scaleFactor:          ' + scaleFactor)
-      // console.log('   ingredient._calories: ' + ingredient._calories)
-      // console.log('   total calories:       ' + this._calories)
-      // console.log('   total mass(g):        ' + this._servingAmount + this._servingUnit)
+      // console.log('   ' + key);
+      // console.log('   scaleFactor:          ' + scaleFactor);
+      // console.log('   ingredient._calories: ' + ingredient._calories);
+      // console.log('   total calories:       ' + this._calories);
+      // console.log('   total mass(g):        ' + this._servingAmount + this._servingUnit);
     }
   }
 
@@ -273,7 +274,8 @@ export class IngredientModel {
     this._measureMeta = ingredientData._measureMeta
 
     // sets member var and also scale factor
-    this.setServingAmount(ingredientData._suggestedServingAmount)
+    this.setServingAmount(ingredientData._suggestedServingAmount,
+                          ingredientData._suggestedServingUnit)
   }
 
   serialize() {
@@ -282,11 +284,16 @@ export class IngredientModel {
     return JSON.stringify(typeToInstance)
   }
 
-  setServingAmount(suggestedServingAmount) {
-    // TODO: get the current serving amount and scale all the numbers appropriately
-    // for the getter functions.
+  setServingAmount(suggestedServingAmount, suggestedServingUnit) {
     this._suggestedServingAmount = suggestedServingAmount
-    this._scaleGettersTo = suggestedServingAmount / this._servingAmount
+    this._suggestedServingUnit = suggestedServingUnit
+
+    // TODO:
+    if (suggestedServingUnit === 'people') {
+      this._scaleGettersTo = 1 / suggestedServingAmount
+    } else {
+      this._scaleGettersTo = suggestedServingAmount / this._servingAmount
+    }
   }
 
   setMeasurePropsFromString(aMeasureString) {
@@ -302,9 +309,9 @@ export class IngredientModel {
         this._measureUnit += textArr[1].replace(/(,|\s)/g, '')
     }
     if (textArr.length >= 3) {
-      let meta = ""
-      for (let token = 2; token < textArr.length; token++) {
-          meta += textArr[token]
+    	let meta = ""
+    	for (let token = 2; token < textArr.length; token++) {
+        	meta += textArr[token]
             meta += " "
         }
         this._measureMeta = meta.trim()
@@ -318,6 +325,10 @@ export class IngredientModel {
 
   getServingAmount() {
     return (this._servingAmount * this._scaleGettersTo).toFixed(this.decimalPlaces)
+  }
+
+  getUnscaledServingAmount() {
+    return this._servingAmount.toFixed(this.decimalPlaces)
   }
 
   getServingUnit() {
