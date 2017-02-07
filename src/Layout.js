@@ -8,6 +8,8 @@ export default class Layout extends React.Component {
     const containerStyle = {
       marginTop: "60px"
     }
+    const {embed} = this.props.location.query
+    const footer = embed  === 'true' ? null : <Footer />
     return (
       <div>
         <div className="container" style={containerStyle}>
@@ -16,7 +18,7 @@ export default class Layout extends React.Component {
               {this.props.children}
             </div>
           </div>
-          <Footer/>
+          {footer}
         </div>
       </div>
     )

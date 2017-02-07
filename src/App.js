@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/lib/Col'
 import Grid from 'react-bootstrap/lib/Grid'
 import Alert from 'react-bootstrap/lib/Alert'
 import Image from 'react-bootstrap/lib/Image'
+import Button from 'react-bootstrap/lib/Button'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import instagram from './instagram.svg'
 import './App.css'
@@ -21,10 +22,11 @@ export default class App extends React.Component {
     super()
     this.state = {
       data: {},
-      error: false
+      error: false,
+      embed: false
     }
   }
-  componentWillMount() {
+  componentDidMount() {
     const {user, label} = this.props.location.query
     const path = '/global/nutritionLabel/' + user + '/' + label
     firebase.database().ref(path).once('value')
@@ -39,7 +41,7 @@ export default class App extends React.Component {
   }
   render() {
     if (Object.prototype.hasOwnProperty.call(this.state.data, 'composite')) {
-      const {user, label} = this.props.location.query
+      const {user, label, embed} = this.props.location.query
       ReactGA.initialize('UA-88850545-2', {
         debug: Config.DEBUG,
         titleCase: false,
@@ -64,20 +66,38 @@ export default class App extends React.Component {
         <text className="App-intro">@{user}</text>
         </a>
       : null
-      return (
-        <Grid>
-          <div className="text-center">
-          <Row className="show-grid">
-            <Col xs={4} md={4} />
-            <Col xs={4} md={4}>
-              <Label ingredientComposite={ingredient}/>
-              {link}
-            </Col>
-            <Col xs={4} md={4} />
-          </Row>
-          </div>
-        </Grid>
-      )
+      const embedUrl = 'http://www.label.inphood.com/?user=' + user + '&label=' + label + '&embed=true'
+      const embedMsg = '<embed src=' + embedUrl + ' height=400 width=400>'
+      if (embed === 'true') {
+        return (
+          <Grid>
+            <div>
+              <Row className="show-grid">
+                <Col xs={4} md={4}>
+                  <Label ingredientComposite={ingredient} />
+                </Col>
+              </Row>
+            </div>
+          </Grid>
+        )
+      }
+      else {
+        return (
+          <Grid>
+            <div className="text-center">
+            <Row className="show-grid">
+              <Col xs={4} md={4} />
+              <Col xs={4} md={4}>
+                <Label ingredientComposite={ingredient}/>
+                {link}
+              </Col>
+              <Col xs={4} md={4} />
+            </Row>
+            <pre>{embedMsg}</pre>
+            </div>
+          </Grid>
+        )
+      }
     }
     else if (this.state.error) {
       ReactGA.initialize('UA-88850545-2', {
