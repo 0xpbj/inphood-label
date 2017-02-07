@@ -67,7 +67,7 @@ export default class App extends React.Component {
         </a>
       : null
       const embedUrl = 'http://www.label.inphood.com/?user=' + user + '&label=' + label + '&embed=true'
-      const embedMsg = '<embed src=' + embedUrl + ' height=400 width=400>'
+      const embedMsg = '<embed src=' + embedUrl + ' height=600 width=400>'
       if (embed === 'true') {
         return (
           <Grid>
