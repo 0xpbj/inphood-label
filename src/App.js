@@ -85,15 +85,14 @@ export default class App extends React.Component {
         return (
           <Grid>
             <div className="text-center">
-            <Row className="show-grid">
-              <Col xs={4} md={4} />
-              <Col xs={4} md={4}>
-                <Label ingredientComposite={ingredient}/>
-                {link}
-              </Col>
-              <Col xs={4} md={4} />
-            </Row>
-            <pre>{embedMsg}</pre>
+              <Row className="show-grid">
+                <Col xs={4} md={4} />
+                <Col xs={4} md={4}>
+                  <Label ingredientComposite={ingredient}/>
+                  {link}
+                </Col>
+                <Col xs={4} md={4} />
+              </Row>
             </div>
           </Grid>
         )
