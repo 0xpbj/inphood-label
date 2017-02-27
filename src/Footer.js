@@ -25,6 +25,7 @@ export default class Footer extends React.Component {
                             </a>
                         </li>
                     </ul>
+                    {/*<a style={{marginRight: 10}} href="http://www.inphood.com/about">About Us</a>*/}
                     <a href="http://www.inphood.com/privacy_policy.pdf">Privacy Policy</a>
                     <p className="text-center"> Copyright &copy; {currentYear} inPhood Inc., All rights reserved.</p>
                 </div>
