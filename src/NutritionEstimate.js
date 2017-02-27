@@ -4,7 +4,7 @@ import Style from "./NutritionEstimateStyles.js"
 export default class NutritionEstimateJSX extends React.Component {
   getInPhoodLogo() {
     return(
-      <a href="http://www.inphood.com">
+      <span>
         <span style={{color:'black'}}>i</span>
         <span style={{color:'green'}}>n</span>
         <span style={{color:'blue'}}>P</span>
@@ -12,25 +12,45 @@ export default class NutritionEstimateJSX extends React.Component {
         <span style={{color:'green'}}>o</span>
         <span style={{color:'blue'}}>o</span>
         <span style={{color:'red'}}>d</span>
-      </a>
+        .com
+      </span>
     )
+  }
+  getGeneratedStatement(displayGeneratedStatement) {
+    if (displayGeneratedStatement === true) {
+      return(<a href="http://www.inphood.com" className="text-center"><h6>Generated at {this.getInPhoodLogo()}</h6></a>)
+    } else {
+      return
+    }
   }
   render() {
     const myStyles = new Style()
+    let resultIsNan = false
 
+    let displayGeneratedStatement = this.props.displayGeneratedStatement
+    if (displayGeneratedStatement === undefined) {
+      displayGeneratedStatement = false
+    }
     let ingredientComposite = this.props.ingredientComposite
     if (ingredientComposite === undefined) {
       const nutritionModel = this.props.nutritionModel
       if (nutritionModel != undefined) {
         ingredientComposite = nutritionModel.getScaledCompositeIngredientModel()
-      } // else TODO: error / reload something
+      }
+    } else {
+      // Commented out - this shouldn't be here--we want this file common to both
+      // the website and nutritionLabel.  TODO: work with PBJ to fix this:
+      //
+      // resultIsNan = isNaN(ingredientComposite.getCalories())
+      // if (resultIsNan)
+      //   return <ProgressBar active now={50} bsStyle="info" />
     }
 
     return(
       <div>
         <section style={myStyles.performanceFacts}>
           <header style={myStyles.performanceFactsHeader}>
-            <h1 style={myStyles.performanceFactsTitle}>{this.getInPhoodLogo()} Nutrition Estimate</h1>
+            <h1 style={myStyles.performanceFactsTitle}>Nutrition Estimate</h1>
             <p style={myStyles.perfomanceFactsHeaderElementP}>
               Serving Size {ingredientComposite.getServingAmount()}{ingredientComposite.getServingUnit()}</p>
           </header>
@@ -183,6 +203,7 @@ export default class NutritionEstimateJSX extends React.Component {
           </table>
           <p style={myStyles.smallInfo}>* Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs:</p>
         </section>
+        {this.getGeneratedStatement(displayGeneratedStatement)}
       </div>
     )
   }

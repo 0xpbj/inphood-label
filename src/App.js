@@ -74,7 +74,7 @@ export default class App extends React.Component {
             <div>
               <Row className="show-grid">
                 <Col xs={4} md={4}>
-                  <Label ingredientComposite={ingredient} />
+                  <Label displayGeneratedStatement={true} ingredientComposite={ingredient} />
                 </Col>
               </Row>
             </div>
@@ -88,7 +88,7 @@ export default class App extends React.Component {
               <Row className="show-grid">
                 <Col xs={4} md={4} />
                 <Col xs={4} md={4}>
-                  <Label ingredientComposite={ingredient}/>
+                  <Label displayGeneratedStatement={true} ingredientComposite={ingredient}/>
                   {link}
                 </Col>
                 <Col xs={4} md={4} />
