@@ -89,7 +89,6 @@ export default class App extends React.Component {
                 <Col xs={4} md={4} />
                 <Col xs={4} md={4}>
                   <Label displayGeneratedStatement={true} ingredientComposite={ingredient}/>
-                  {link}
                 </Col>
                 <Col xs={4} md={4} />
               </Row>
