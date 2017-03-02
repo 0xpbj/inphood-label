@@ -68,34 +68,15 @@ export default class App extends React.Component {
       : null
       const embedUrl = 'http://www.label.inphood.com/?user=' + user + '&label=' + label + '&embed=true'
       const embedMsg = '<embed src=' + embedUrl + ' height=600 width=400>'
-      if (embed === 'true') {
-        return (
-          <Grid>
-            <Row>
-              <Col xs={12} sm={12} md={12} lg={12}>
-                <Label displayGeneratedStatement={true} ingredientComposite={ingredient} />
-              </Col>
-            </Row>
-          </Grid>
+
+      return (
+          <Label
+            ingredientComposite={ingredient}
+            embed={embed}
+            displayGeneratedStatement={true}/>
         )
-      }
-      else {
-        return (
-          <Grid>
-            <div className="text-center">
-              <Row className="show-grid">
-                <Col xs={4} md={4} />
-                <Col xs={4} md={4}>
-                  <Label displayGeneratedStatement={true} ingredientComposite={ingredient}/>
-                </Col>
-                <Col xs={4} md={4} />
-              </Row>
-            </div>
-          </Grid>
-        )
-      }
-    }
-    else if (this.state.error) {
+
+    } else if (this.state.error) {
       ReactGA.initialize('UA-88850545-2', {
         debug: Config.DEBUG,
         titleCase: false,
