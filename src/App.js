@@ -71,13 +71,11 @@ export default class App extends React.Component {
       if (embed === 'true') {
         return (
           <Grid>
-            <div>
-              <Row className="show-grid">
-                <Col xs={4} md={4}>
-                  <Label displayGeneratedStatement={true} ingredientComposite={ingredient} />
-                </Col>
-              </Row>
-            </div>
+            <Row>
+              <Col xs={12} sm={12} md={12} lg={12}>
+                <Label displayGeneratedStatement={true} ingredientComposite={ingredient} />
+              </Col>
+            </Row>
           </Grid>
         )
       }

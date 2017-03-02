@@ -18,7 +18,12 @@ export default class NutritionEstimateJSX extends React.Component {
   }
   getGeneratedStatement(displayGeneratedStatement) {
     if (displayGeneratedStatement === true) {
-      return(<a href="http://www.inphood.com" className="text-center"><h6>Created at {this.getInPhoodLogo()}</h6></a>)
+      return(
+              <a href="http://www.inphood.com"
+                 className="text-center">
+                <h6>Estimated at {this.getInPhoodLogo()}</h6>
+              </a>
+            )
     } else {
       return
     }
