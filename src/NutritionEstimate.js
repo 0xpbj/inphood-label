@@ -56,6 +56,11 @@ export default class NutritionEstimateJSX extends React.Component {
       //   return <ProgressBar active now={50} bsStyle="info" />
     }
 
+    const servingSizeSentence =
+      "Serving Size " +
+      ingredientComposite.getDisplayServingCount() + " " + ingredientComposite.getDisplayServingUnit() +
+      " (" + ingredientComposite.getServingAmount() + ingredientComposite.getServingUnit() + ")"
+
     let edgeCols = [0, 0, 0, 0]
     let centerCols = [12, 12, 12, 12]
     if (!embed) {
@@ -81,8 +86,7 @@ export default class NutritionEstimateJSX extends React.Component {
             <section style={myStyles.performanceFacts}>
               <header style={myStyles.performanceFactsHeader}>
                 <h1 style={myStyles.performanceFactsTitle}>Nutrition Facts</h1>
-                <p style={myStyles.perfomanceFactsHeaderElementP}>
-                  Serving Size {ingredientComposite.getServingAmount()}{ingredientComposite.getServingUnit()}</p>
+                <p style={myStyles.perfomanceFactsHeaderElementP}>{servingSizeSentence}</p>
               </header>
               <table style={myStyles.performanceFactsTable}>
                 <thead>
