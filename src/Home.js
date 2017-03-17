@@ -1,4 +1,4 @@
-var React = require('react')
+const React = require('react')
 import Alert from 'react-bootstrap/lib/Alert'
 
 export default class Home extends React.Component {

@@ -1,7 +1,6 @@
-var React = require('react')
+const React = require('react')
 import ReactGA from 'react-ga'
-// import firebase from 'firebase'
-var firebase = require('firebase')
+const firebase = require('firebase')
 import Label from './NutritionEstimate'
 import {IngredientModel} from './IngredientModel'
 import Row from 'react-bootstrap/lib/Row'
@@ -59,24 +58,23 @@ export default class App extends React.Component {
       let ingredientData = JSON.parse(this.state.data.composite)
       let ingredient = new IngredientModel()
       ingredient.initializeFromSerialization(ingredientData)
-      const userLink = (user !== 'anonymous') ? "http://www.instagram.com/" + user : ''
-      const link = (user !== 'anonymous')
-      ? <a href={userLink}>
-        <img src={instagram} className="App-logo" alt="logo" />
-        <text className="App-intro">@{user}</text>
-        </a>
-      : null
-      const embedUrl = 'http://www.label.inphood.com/?user=' + user + '&label=' + label + '&embed=true'
+      // const userLink = (user !== 'anonymous') ? "http://www.instagram.com/" + user : ''
+      // const link = (user !== 'anonymous')
+      // ? <a href={userLink}>
+      //   <img src={instagram} className="App-logo" alt="logo" />
+      //   <text className="App-intro">@{user}</text>
+      //   </a>
+      // : null
+      const embedUrl = 'http://www.label.inphood.com/?user=' + user + '&label=' + label
       const embedMsg = '<embed src=' + embedUrl + ' height=600 width=400>'
-
       return (
-          <Label
-            ingredientComposite={ingredient}
-            embed={embed}
-            displayGeneratedStatement={true}/>
-        )
-
-    } else if (this.state.error) {
+        <Label
+          ingredientComposite={ingredient}
+          embed={embed}
+          displayGeneratedStatement={true}/>
+      )
+    }
+    else if (this.state.error) {
       ReactGA.initialize('UA-88850545-2', {
         debug: Config.DEBUG,
         titleCase: false,

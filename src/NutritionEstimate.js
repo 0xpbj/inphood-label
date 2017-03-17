@@ -1,4 +1,4 @@
-var React = require('react')
+const React = require('react')
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 import Grid from 'react-bootstrap/lib/Grid'
@@ -35,7 +35,8 @@ export default class NutritionEstimateJSX extends React.Component {
     const myStyles = new Style()
     let resultIsNan = false
 
-    const embed = this.props.embed === 'true'
+    // const embed = this.props.embed === 'true'
+    const embed = true
 
     let displayGeneratedStatement = this.props.displayGeneratedStatement
     if (displayGeneratedStatement === undefined) {

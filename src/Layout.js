@@ -1,4 +1,4 @@
-var React = require('react')
+const React = require('react')
 
 export default class Layout extends React.Component {
   render() {

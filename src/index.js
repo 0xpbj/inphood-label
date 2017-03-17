@@ -1,5 +1,5 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
+const React = require('react')
+const ReactDOM = require('react-dom')
 import App from './App'
 import Home from './Home'
 import Layout from './Layout'

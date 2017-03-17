@@ -1,4 +1,4 @@
-var React = require('react')
+const React = require('react')
 import Button from 'react-bootstrap/lib/Button'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 
