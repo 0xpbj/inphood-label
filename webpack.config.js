@@ -55,8 +55,6 @@ module.exports = {
   },
   externals: {
     'Config': JSON.stringify({
-      FIREBASE_API_KEY:'AIzaSyBmW9xYOdOWcasrKN102p9RCoWhG97hMeY',
-      FIREBASE_DATABASE_URL:'https://inphooddb-e0dfd.firebaseio.com',
       DEBUG: false,
     }),
     'react': 'React',
